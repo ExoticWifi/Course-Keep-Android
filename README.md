@@ -1,2 +1,2 @@
-# Course-Keep-Android
+# CourseKeep-Android
 This is the offical repository for the Android version of CourseKeep!
