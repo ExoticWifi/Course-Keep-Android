@@ -34,10 +34,14 @@ class MainActivity : AppCompatActivity() {
 
     }
 
+    override fun onResume() {
+        super.onResume()
+
+        classRV.adapter?.notifyDataSetChanged();
+    }
+
     fun getAllClasses(){
         var courseList: ArrayList<ClassModel>
-
-        //courseList = ArrayList()
 
         val results: RealmResults<ClassModel> = realm.where(ClassModel::class.java).findAll()
         classRV.adapter = MainAdapter(results)
