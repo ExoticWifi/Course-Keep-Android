@@ -5,9 +5,6 @@ import 'package:hive/hive.dart';
 import 'classContent.dart';
 
 class HomeScreen extends StatelessWidget {
-  var className = "Algebra";
-  var classLocation = "Online";
-  var classCode = "MA 2312";
   var box;
 
   @override

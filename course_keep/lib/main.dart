@@ -13,6 +13,7 @@ void main() async{
   Hive.registerAdapter(CourseAdapter());
   Hive.openBox('courses');
   runApp(MaterialApp(
+    title: 'Hive tutorial',
     initialRoute: '/',
     routes: {
       '/': (context) => HomeScreen(),

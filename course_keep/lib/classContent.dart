@@ -1,3 +1,4 @@
+import 'package:course_keep/AddClassScreen.dart';
 import 'package:course_keep/Models/course.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -7,31 +8,31 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'NewCourseForm.dart';
 
 class classContent extends StatelessWidget {
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: Colors.grey[200],
-        appBar: AppBar(
-          backgroundColor: Colors.transparent,
-          elevation: 0.0,
-          title: Text(
-            "CourseKeep",
-            style: TextStyle(
-              color: Colors.black,
-              fontSize: 36,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-        ),
-        extendBodyBehindAppBar: true,
         body: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
+            SizedBox(
+              height: 50,
+            ),
+            Align(
+              alignment: Alignment.centerLeft,
+              child: Text(
+                "CourseKeep",
+                style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 50,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
             Expanded(child: _buildListView()),
             newCourseForm(),
           ],
-        )
-    );
+        ));
   }
 
   Widget _buildListView() {
@@ -39,34 +40,86 @@ class classContent extends StatelessWidget {
     return ValueListenableBuilder(
       valueListenable: Hive.box('courses').listenable(),
       builder: (context, courseBox, widget) {
-        return ListView.builder(itemCount: courseBox.length,
+        return ListView.builder(
+          itemCount: courseBox.length + 1,
           itemBuilder: (context, index) {
-            final course = courseBox.getAt(index) as Course;
-
-            return ListTile(
-              title: Text(course.name),
-              subtitle: Text(course.location.toString()),
-              trailing: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: <Widget>[
-                  IconButton(
-                    icon: Icon(Icons.refresh),
-                    onPressed: () {
-                      courseBox.putAt(
-                        index,
-                        Course('${course.name}*', course.location + 1.toString(), course.code),
-                      );
-                    },
+            print(index);
+            if (index == courseBox.length){
+              return Column(
+                children: [
+                  SizedBox(
+                    height: 5,
                   ),
-                  IconButton(
-                    icon: Icon(Icons.delete),
-                    onPressed: () {
-                      courseBox.deleteAt(index);
-                    },
-                  )
+                  FloatingActionButton(
+                      child: Icon(Icons.add),
+                      onPressed:(){
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => AddClassScreen()));
+                      }
+                  ),
                 ],
-              ),
-            );
+              );
+            }
+            else {
+              final course = courseBox.getAt(index) as Course;
+              return Card(
+                child: InkWell(
+                  onTap: () {
+                    print("Tapped!");
+                  },
+                  child: Container(
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: <Widget>[
+                        ListTile(
+                          title: Text(course.name),
+                          subtitle: Text(course.location),
+                          trailing: Icon(Icons.arrow_forward_ios),
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: <Widget>[
+                            Container(
+                              width: 40,
+                              height: 45,
+                              child: (IconButton(
+                                icon: Icon(Icons.delete),
+                                iconSize: 35,
+                                onPressed: () {
+                                  courseBox.deleteAt(index);
+                                },
+                              )),
+                            ),
+                            Text(course.code),
+                            SizedBox(
+                              width: 10,
+                            ),
+                            // Container(
+                            //   width: 40,
+                            //   height: 45,
+                            //   child: (IconButton(
+                            //     icon: Icon(Icons.refresh),
+                            //     iconSize: 35,
+                            //     onPressed: () {
+                            //       courseBox.putAt(
+                            //         index,
+                            //         Course('${course.name}*',
+                            //             course.location + 1.toString(),
+                            //             course.code),
+                            //       );
+                            //     },
+                            //   )),
+                            // ),
+
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              );
+            };
           },
         );
       },
@@ -74,6 +127,6 @@ class classContent extends StatelessWidget {
   }
 
   openBox(String boxName) async {
-      Hive.openBox(boxName);
+    Hive.openBox(boxName);
   }
 }
