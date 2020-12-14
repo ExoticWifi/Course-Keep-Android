@@ -30,7 +30,6 @@ class classContent extends StatelessWidget {
               ),
             ),
             Expanded(child: _buildListView()),
-            newCourseForm(),
           ],
         ));
   }
