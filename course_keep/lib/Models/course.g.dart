@@ -20,19 +20,52 @@ class CourseAdapter extends TypeAdapter<Course> {
       fields[0] as String,
       fields[1] as String,
       fields[2] as String,
+      fields[4] as int,
+      fields[3] as String,
+      fields[5] as bool,
+      fields[6] as bool,
+      fields[7] as bool,
+      fields[8] as bool,
+      fields[9] as bool,
+      fields[10] as bool,
+      fields[11] as bool,
+      fields[12] as String,
+      fields[13] as String,
     );
   }
 
   @override
   void write(BinaryWriter writer, Course obj) {
     writer
-      ..writeByte(3)
+      ..writeByte(14)
       ..writeByte(0)
       ..write(obj.name)
       ..writeByte(1)
       ..write(obj.location)
       ..writeByte(2)
-      ..write(obj.code);
+      ..write(obj.code)
+      ..writeByte(3)
+      ..write(obj.section)
+      ..writeByte(4)
+      ..write(obj.hours)
+      ..writeByte(5)
+      ..write(obj.sunday)
+      ..writeByte(6)
+      ..write(obj.monday)
+      ..writeByte(7)
+      ..write(obj.tuesday)
+      ..writeByte(8)
+      ..write(obj.wednesday)
+      ..writeByte(9)
+      ..write(obj.thursday)
+      ..writeByte(10)
+      ..write(obj.friday)
+      ..writeByte(11)
+      ..write(obj.saturday)
+      ..writeByte(12)
+      ..write(obj.startTime)
+      ..writeByte(13)
+      ..write(obj.endTime);
   }
 
   @override

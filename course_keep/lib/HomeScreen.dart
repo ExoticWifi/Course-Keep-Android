@@ -29,17 +29,3 @@ class HomeScreen extends StatelessWidget {
     Hive.openBox(boxName);
   }
 }
-
-// body: ListView.separated(
-//   itemBuilder: (context, position) {
-//     return Card(
-//
-//     );
-//   },
-//   separatorBuilder: (context, position) {
-//     return SizedBox(
-//       height: 15,
-//     );
-//   },
-//   itemCount: className.length,
-// ),
